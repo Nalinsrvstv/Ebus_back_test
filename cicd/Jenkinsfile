@@ -1,0 +1,94 @@
+pipeline {
+    agent any
+        // agent {
+        // docker {
+        //     image 'node:latest'  // Use an appropriate Node.js version
+        //     args '-u root'  // Run as root for permission-related issues
+        // }
+        // }
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('dockercreds')
+        CONTAINER_NAME = "ebus_backend"
+        DOCKER_IMAGE = "navin531/ebus_backend:${BUILD_NUMBER}"
+        SSH_CREDENTIAL = credentials('sshcred')
+        EC2_INSTANCE_IP = '51.20.65.40'
+        EC2_USERNAME = 'ec2-user'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Prepare Environment') {
+            steps {
+                script {
+                    // Add Docker to the PATH
+                    env.PATH = "/usr/bin:/usr/local/bin:$env.PATH"
+                }
+            }
+        }
+         stage('Build and Publish Docker Image') {
+            steps {
+                script {
+                      // Access the credentials
+                    def dockerHubCred = DOCKER_HUB_CREDENTIALS
+                     // Use the withCredentials step to securely access the Docker Hub credentials
+                    withCredentials([usernamePassword(credentialsId: 'dockercreds', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                          // Login to Docker Hub using credentials
+                      sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
+                   
+                    }
+                    // Build the Docker image
+                    sh "docker build --platform linux/amd64 -t ${DOCKER_IMAGE}  -f ./cicd/Dockerfile ."
+                    
+                 
+                  
+
+                    // Push the Docker image to Docker Hub
+                    sh "docker push ${DOCKER_IMAGE}"
+                }
+            }
+        }
+         stage('Deploy and Run') {
+            steps {
+                  script {
+            withCredentials([sshUserPrivateKey(credentialsId: "sshcred", keyFileVariable: 'KEYFILE', passphraseVariable: '')]) {
+                sh '''
+                ssh -i $KEYFILE $EC2_USERNAME@$EC2_INSTANCE_IP << EOF
+                cd /home
+                if docker ps | grep -q "$CONTAINER_NAME"; then
+                    docker stop "$CONTAINER_NAME"
+                    docker rm "$CONTAINER_NAME"
+                else
+                    echo "no $CONTAINER_NAME running"
+                    # Ignore if no previous container is running
+                fi
+                pwd
+                ls
+                chmod +x ./ec2-user/utils/serverClean.sh
+                ./ec2-user/utils/serverClean.sh
+
+                docker pull "$DOCKER_IMAGE"
+                docker run --network host -d --name "$CONTAINER_NAME" "$DOCKER_IMAGE"
+
+               
+           exit
+               EOF
+                '''
+            }
+        }
+            }
+        } 
+        stage('Deleting Older Docker Images') {
+            steps {
+                sh 'chmod +x ./cicd/cleanup_images.sh' // Ensure the script is executable
+                sh './cicd/cleanup_images.sh' // Execute the script
+            }
+        }
+    }
+
+
+    
+}
