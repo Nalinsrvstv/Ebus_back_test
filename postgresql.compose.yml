@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: WRI_Database
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root@#23
+      POSTGRES_DB: WRI
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+volumes:
+  postgres_data:

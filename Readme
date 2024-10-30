@@ -1,0 +1,6 @@
+<!-- to create project -->
+django-admin startproject projectname
+
+<!-- to create app -->
+cd projectname
+python manage.py startapp myapi
