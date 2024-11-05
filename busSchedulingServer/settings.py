@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "13.53.124.157",
     "10.41.52.101",
-    "43.204.238.45"
+    "43.204.238.45",
     "api.ebusplanning.world",
 ]
 
