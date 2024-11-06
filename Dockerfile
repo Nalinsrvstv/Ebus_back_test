@@ -29,8 +29,4 @@ ENV DJANGO_SETTINGS_MODULE=Ebus_backend.settings_dev
 EXPOSE 8000
 
 # Define the command to run your application
-CMD /bin/bash -c "source backendvenv/bin/activate && \
-    python manage.py makemigrations && \
-    python manage.py migrate && \
-    #echo \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adminpass') if not User.objects.filter(username='admin').exists() else None\" | python manage.py shell && \
-    python manage.py runserver 0.0.0.0:8000"
+CMD /bin/bash -c "python manage.py runserver 0.0.0.0:8000"
