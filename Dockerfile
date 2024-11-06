@@ -1,6 +1,11 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9.6
 
+#System dependencies
+RUN apt-get update && \
+    apt-get install -y python3-venv python3-pip postgresql postgresql-contrib nodejs npm && \
+    rm -rf /var/lib/apt/lists/*
+    
 # Set environment variables for Python to run in unbuffered mode
 ENV PYTHONUNBUFFERED 1
 
@@ -14,7 +19,7 @@ COPY . /app
 #RUN pip install -r requirements.txt
 # Set up a virtual environment and install Python dependencies
 RUN python3 -m venv backendvenv
-#RUN /bin/bash -c "source backendvenv/bin/activate && pip install -r requirements.txt"
+RUN /bin/bash -c "source backendvenv/bin/activate && pip install -r requirements.txt"
 
 # Set environment variables for Django
 ENV PYTHONUNBUFFERED=1
