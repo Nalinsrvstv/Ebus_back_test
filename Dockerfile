@@ -1,32 +1,15 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9.6
+# Use the official Python 3.12 image
+FROM python:3.12
 
-#System dependencies
-RUN apt-get update && \
-    apt-get install -y python3-venv python3-pip postgresql postgresql-contrib nodejs npm && \
-    rm -rf /var/lib/apt/lists/*
-    
-# Set environment variables for Python to run in unbuffered mode
-ENV PYTHONUNBUFFERED 1
-
-# Set the working directory to /app
+# Set the working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy the requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Install any needed packages specified in requirements.txt
-#RUN pip install -r requirements.txt
-# Set up a virtual environment and install Python dependencies
-RUN python3 -m venv backendvenv
-RUN /bin/bash -c "source backendvenv/bin/activate && pip install -r requirements.txt"
+# Copy the application code
+COPY . .
 
-# Set environment variables for Django
-ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE=Ebus_backend.settings_dev
-
-# Make port 8000 available to the world outside this container
-EXPOSE 8000
-
-# Define the command to run your application
-CMD /bin/bash -c "python manage.py runserver 0.0.0.0:8000"
+# Specify the command to run the backend server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
