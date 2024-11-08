@@ -1,5 +1,5 @@
-# Use the official Python 3.12 image
-FROM python:3.12
+# Use the official Python 3.10 image
+FROM python:3.10-slim
 
 # Set the working directory
 WORKDIR /app
@@ -11,5 +11,8 @@ RUN pip install -r requirements.txt
 # Copy the application code
 COPY . .
 
+ENV DJANGO_SETTINGS_MODULE=busSchedulingServer.settings_dev
+
+EXPOSE 8000
 # Specify the command to run the backend server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
