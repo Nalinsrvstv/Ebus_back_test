@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Copy the application code
+# Copy the application code 
 COPY . .
 
 ENV DJANGO_SETTINGS_MODULE=busSchedulingServer.settings_dev
