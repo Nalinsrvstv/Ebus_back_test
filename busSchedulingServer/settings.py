@@ -173,18 +173,18 @@ EMAIL_HOST_PASSWORD = "xtgm wemv pstu vuvj"
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
-    "http://13.201.75.227:3000",
-    #"http://16.171.134.46:4000",
-    #"https://www.ebusplanning.world",
-    #"https://development.ebusplanning.world",
-    #"https://api.ebusplanning.world",
-    #"http://localhost:3000",
-    #"http://51.20.65.40:3000",  # Replace with your frontend development server URL,
-    #"http://10.41.52.140:3000",
-    #"https://13.53.124.157:8000",
+    "http://13.201.75.227:8000",
+    "http://16.171.134.46:4000",
+    "https://www.ebusplanning.world",
+    "https://development.ebusplanning.world",
+    "https://api.ebusplanning.world",
+    "http://localhost:3000",
+    "http://51.20.65.40:3000",  # Replace with your frontend development server URL,
+    "http://10.41.52.140:3000",
+    "https://13.53.124.157:8000",
     "https://main.d2uv6e8yqjacfb.amplifyapp.com",
-    #"https://development.d2uv6e8yqjacfb.amplifyapp.com",
-    #"https://test.d2uv6e8yqjacfb.amplifyapp.com",
+    "https://development.d2uv6e8yqjacfb.amplifyapp.com",
+    "https://test.d2uv6e8yqjacfb.amplifyapp.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
