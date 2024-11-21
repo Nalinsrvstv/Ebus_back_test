@@ -12,7 +12,7 @@ DATABASES = {
         "NAME": "ebus",#"test_2",  # Replace with your database name
         "USER": "rohit",#"nalin",  # Replace with your database user
         "PASSWORD": "rohit",#"2209"  # Replace with your database password
-        "HOST": "localhost"#"13.201.75.227",  # Replace with your database host if necessary
+        "HOST": "localhost",#"13.201.75.227",  # Replace with your database host if necessary
         "PORT": "5432",
     }
 }
