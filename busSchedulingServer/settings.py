@@ -36,7 +36,7 @@ ALLOWED_HOSTS = [
     "43.204.238.45",
     "13.201.75.227",
     "api.ebusplanning.world",
-    "api.ebus.world"
+    "api.ebus.world",
     "https://main.d2uv6e8yqjacfb.amplifyapp.com",
 ]
 
