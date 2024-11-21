@@ -9,10 +9,10 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ebus",#"test_2",  # Replace with your database name
-        "USER": "rohit",#"nalin",  # Replace with your database user
-        "PASSWORD": "rohit",#"2209"  # Replace with your database password
-        "HOST": "127.0.0.1",#"13.201.75.227",  # Replace with your database host if necessary
+        "NAME": "test_2",  #"ebus", Replace with your database name
+        "USER": "nalin",  #"rohit" Replace with your database user
+        "PASSWORD": "2209",  #"rohit", Replace with your database password
+        "HOST": "13.201.75.227",#"127.0.0.1",  # Replace with your database host if necessary
         "PORT": "5432",
     }
 }
